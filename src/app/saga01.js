@@ -25,3 +25,4 @@ function* mySaga(sweet, greet) {
 runSaga(store, mySaga, "yo!! shawty ", greet);
 
 store.dispatch({ type: "getUser" });
+store.actionsEmitter.on("getUser", () => console.log("Action getUser emitted"));

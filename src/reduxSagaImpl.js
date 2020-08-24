@@ -1,13 +1,14 @@
 export async function runSaga(store, saga, ...args) {
-  const waitNextAction = (actionType) => {
-    return new Promise((resolve) => {
+  const waitNextAction = (actionType) =>
+    new Promise((resolve) => {
       // ?? why registering listner here
+      debugger;
+      console.log("prms");
       store.actionsEmitter.once(actionType, resolve);
     });
-  };
   try {
     // returns an iterator/generator object
-    console.log(args);
+    // console.log(args);
     const it = saga(...args);
     // initiate saga execution
     let result = it.next();
@@ -19,6 +20,7 @@ export async function runSaga(store, saga, ...args) {
           result = it.next();
           break;
         case "take":
+          console.log("take");
           await waitNextAction(effect.actionType);
           result = it.next();
           break;
