@@ -9,9 +9,9 @@ const showUserName = (user) => {
 
 const greet = "baby mama";
 
-function* mySaga(sweet, greet) {
-  console.log(sweet, greet);
-  // wait for action dispatch to resume saga
+function* mySaga(greet) {
+  console.log("Welcome to mySaga", greet);
+  // wait for "getUser" action dispatch to resume saga
   yield take("getUser");
   // read state
   const userId = yield select(selectUserId);
@@ -22,7 +22,5 @@ function* mySaga(sweet, greet) {
   yield put({ type: "setUserSuccess", payload: user });
 }
 
-runSaga(store, mySaga, "yo!! shawty ", greet);
-
+runSaga(store, mySaga, greet);
 store.dispatch({ type: "getUser" });
-store.actionsEmitter.on("getUser", () => console.log("Action getUser emitted"));

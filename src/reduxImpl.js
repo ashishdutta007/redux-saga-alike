@@ -8,8 +8,7 @@ export const createStore = (reducer, initialState) => {
     stateEmitter: new EventEmitter(),
     actionsEmitter: new EventEmitter(),
     dispatch: function (action) {
-      debugger;
-      console.log("dispatch");
+      console.log("action dispatched : ", action.type);
       this.state = reducer(this.state, action);
       // for saga
       this.actionsEmitter.emit(action.type, action);

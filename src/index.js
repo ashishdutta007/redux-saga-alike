@@ -1,6 +1,4 @@
 export const testMama = (name) => {
-  debugger;
-  console.log("test mama called");
   return {
     name: name,
     getName: () => {
@@ -9,5 +7,5 @@ export const testMama = (name) => {
   };
 };
 
-// const obj = testMama("asd");
-// obj.getName();
+const obj = testMama("asd");
+obj.getName();

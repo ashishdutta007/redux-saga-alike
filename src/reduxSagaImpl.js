@@ -1,9 +1,8 @@
 export async function runSaga(store, saga, ...args) {
   const waitNextAction = (actionType) =>
     new Promise((resolve) => {
-      // ?? why registering listner here
-      debugger;
-      console.log("prms");
+      //"getUser" event listner is registered at the time of running runSaga()
+      console.log("Register action listener");
       store.actionsEmitter.once(actionType, resolve);
     });
   try {
@@ -20,7 +19,7 @@ export async function runSaga(store, saga, ...args) {
           result = it.next();
           break;
         case "take":
-          console.log("take");
+          console.log("take effect");
           await waitNextAction(effect.actionType);
           result = it.next();
           break;
