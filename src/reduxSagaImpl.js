@@ -3,6 +3,8 @@ import { fork, take } from "./sagaEffects";
 // helper saga
 export function* takeEvery(actionType, saga) {
   console.log("running takeEvery");
+  // fork new saga to create new execution contexts
+  // Both saga (the initial one and the new one) will continue to run independently
   // forks a new saga & runs an infinite loop
   // listening to the action <actionType>
   yield fork(function* newSaga() {
@@ -25,7 +27,6 @@ export async function runSaga(store, saga, ...args) {
     });
   try {
     // returns an iterator/generator object
-    console.log("running mainSaga");
     const it = saga(...args);
     // initiate saga execution
     let result = it.next();

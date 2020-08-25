@@ -7,6 +7,10 @@ const showUserName = (user) => {
   console.log("User:", user.name);
 };
 
+const displayCurrentState = () => {
+  console.log("state ", store.state);
+};
+
 function* userSaga() {
   // wait for "getUser" action dispatch to resume saga
   yield take("getUser");
@@ -18,8 +22,7 @@ function* userSaga() {
   yield call(showUserName, user);
   // dispatch action
   yield put({ type: "setUserSuccess", payload: user });
-  // fork saga to create several execution contexts
-  // Both saga (the initial one and the new one) will continue to run independently
+  yield call(displayCurrentState);
 }
 
 // runs on initial exec by runSaga
@@ -31,4 +34,5 @@ function* mainSaga(greet) {
 }
 
 runSaga(store, mainSaga, "baby mama!! xoxo ..");
+store.dispatch({ type: "getUser" });
 store.dispatch({ type: "getUser" });
