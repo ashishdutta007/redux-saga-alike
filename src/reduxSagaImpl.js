@@ -22,7 +22,10 @@ export async function runSaga(store, saga, ...args) {
       //"getUser" event listner is registered at the time of running runSaga()
       // saga registers subscriber for actions to be dispatched
       console.log("Register action listener");
-      store.actionsEmitter.once(actionType, resolve);
+      store.actionsEmitter.once(actionType, (action) => {
+        console.log("action emitted ", action);
+        resolve(action);
+      });
       // store.actionsEmitter.on(actionType, resolve);
     });
   try {
@@ -39,8 +42,8 @@ export async function runSaga(store, saga, ...args) {
           result = it.next();
           break;
         case "take":
-          await waitNextAction(effect.actionType);
-          result = it.next();
+          const action = await waitNextAction(effect.actionType);
+          result = it.next(action);
           break;
         case "call":
           result = it.next(await effect.fn(...effect.args));
